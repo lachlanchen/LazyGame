@@ -36,7 +36,7 @@ export const lineManifest: GameManifest = {
   minPlayers: 2,
   maxPlayers: 2,
   information: 'perfect',
-  locales: ['en', 'zh-Hans', 'ja'],
+  locales: ['en', 'ar', 'es', 'fr', 'ja', 'ko', 'vi', 'zh-Hans', 'zh-Hant', 'de', 'ru'],
 }
 
 export function lineWinner(board: readonly Cell[]): Mark | 'draw' | null {

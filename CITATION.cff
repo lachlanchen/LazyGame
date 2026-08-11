@@ -1,12 +1,19 @@
 cff-version: 1.2.0
-message: "If you use Game Teaching Framework, please cite this repository."
+message: "If you use LazyGame, please cite this repository."
 type: software
-title: "Game Teaching Framework"
+title: "LazyGame: Game Teaching Framework"
 authors:
   - family-names: Chen
     given-names: Lachlan
 repository-code: "https://github.com/lachlanchen/LazyGame"
-url: "https://github.com/lachlanchen/LazyGame"
+url: "https://lazying.art"
 license: MIT
 version: 0.1.0
 date-released: 2026-08-11
+abstract: "A local-first framework for deterministic, evidence-bounded game teaching applications."
+keywords:
+  - game framework
+  - teaching
+  - deterministic systems
+  - local first
+  - internationalization

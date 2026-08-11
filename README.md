@@ -1,76 +1,72 @@
-# Game Teaching Framework
+[English](README.md) · [العربية](i18n/README.ar.md) · [Español](i18n/README.es.md) · [Français](i18n/README.fr.md) · [日本語](i18n/README.ja.md) · [한국어](i18n/README.ko.md) · [Tiếng Việt](i18n/README.vi.md) · [中文 (简体)](i18n/README.zh-Hans.md) · [中文（繁體）](i18n/README.zh-Hant.md) · [Deutsch](i18n/README.de.md) · [Русский](i18n/README.ru.md)
 
-Game Teaching Framework turns deterministic game engines into interactive,
-evidence-aware teachers. It extracts the reusable authority, candidate,
-localization, persistence, and teaching patterns proven in
-[Path of Influence](https://github.com/lachlanchen/LazyWeiqi) without pretending
-that one rules engine can govern unrelated games.
+[![LazyingArt banner](https://github.com/lachlanchen/lachlanchen/raw/main/figs/banner.png)](https://github.com/lachlanchen/lachlanchen/blob/main/figs/banner.png)
 
-The framework is intentionally strict:
+# LazyGame · Game Teaching Framework
 
-- deterministic adapters own rules, legal actions, state transitions, scoring,
-  hidden information, and replayable event history;
-- candidates bind the complete state, actor, and canonical action;
-- previews never mutate a session and commitment is explicit;
-- engines and models can analyze only server/client-supplied legal candidates;
-- every teaching claim is labeled as exact, calculated, engine, authored,
-  model-generated, or analogy;
-- English, Simplified Chinese, and Japanese use stable message keys.
+*A local-first foundation that turns deterministic game rules into clear, evidence-aware teaching.*
+
+[![Website](https://img.shields.io/badge/Website-lazying.art-0EA5E9?style=flat-square)](https://lazying.art) [![CI](https://github.com/lachlanchen/LazyGame/actions/workflows/ci.yml/badge.svg)](https://github.com/lachlanchen/LazyGame/actions/workflows/ci.yml) [![License: MIT](https://img.shields.io/badge/License-MIT-22C55E?style=flat-square)](LICENSE) [![GitHub Sponsors](https://img.shields.io/badge/Sponsor-lachlanchen-EA4AAA?style=flat-square&logo=githubsponsors)](https://github.com/sponsors/lachlanchen)
+
+LazyGame provides reusable authority, legal-candidate, redaction, localization,
+persistence, and teaching contracts. Each product keeps its own rules engine and
+release history; the framework never pretends that one rules engine can govern
+unrelated games.
+
+| Donate | PayPal | Stripe |
+| --- | --- | --- |
+| [![Donate](https://img.shields.io/badge/Donate-LazyingArt-0EA5E9?style=for-the-badge&logo=kofi&logoColor=white)](https://chat.lazying.art/donate) | [![PayPal](https://img.shields.io/badge/PayPal-RongzhouChen-00457C?style=for-the-badge&logo=paypal&logoColor=white)](https://paypal.me/RongzhouChen) | [![Stripe](https://img.shields.io/badge/Stripe-Donate-635BFF?style=for-the-badge&logo=stripe&logoColor=white)](https://buy.stripe.com/aFadR8gIaflgfQV6T4fw400) |
+
+## Preview
+
+![LazyGame teaching demo](docs/images/app.png)
+
+## Design principles
+
+- Deterministic adapters own rules, legal actions, scoring, hidden information,
+  state transitions, and replayable history.
+- Candidate IDs bind the complete state, actor, and canonical action; stale or
+  fabricated choices fail closed.
+- A preview never mutates a session. Commitment is always explicit.
+- Engine and model output is bounded to legal candidates and labeled separately
+  from exact, calculated, authored, and analogy evidence.
+- The reference interface supports English, Arabic, Spanish, French, Japanese,
+  Korean, Vietnamese, Simplified Chinese, Traditional Chinese, German, and
+  Russian, including right-to-left Arabic layout.
 
 ## Workspace
 
-```text
-packages/core/   Pure contracts, candidate binding, redaction, i18n, sessions
-packages/react/ Accessible teaching components and controller hooks
-apps/demo/       A small complete reference game
-Chess/           Chess/Xiangqi/Shogi product submodule
-Poker/           Hold'em/Bridge/Guandan product submodule
-Mahjong/         Mahjong product submodule
-```
-
-The products are independently released at
-[Chess](https://github.com/lachlanchen/LazyChess),
-[Poker](https://github.com/lachlanchen/LazyPoker), and
-[Mahjong](https://github.com/lachlanchen/LazyMahjong), then linked here as Git
-submodules so their histories and release gates remain separate.
+| Path | Purpose |
+| --- | --- |
+| `packages/core/` | Pure contracts, candidate binding, visibility, i18n, sessions, and replay |
+| `packages/react/` | Accessible teaching components and controller hooks |
+| `apps/demo/` | A compact complete reference game |
+| `LazyWeiqi/` | [LazyWeiqi](https://github.com/lachlanchen/LazyWeiqi) product submodule |
+| `LazyChess/` | [LazyChess](https://github.com/lachlanchen/LazyChess): Chess, Xiangqi, and Shogi |
+| `LazyPoker/` | [LazyPoker](https://github.com/lachlanchen/LazyPoker): Hold'em, Bridge, and Guandan |
+| `LazyMahjong/` | [LazyMahjong](https://github.com/lachlanchen/LazyMahjong) product submodule |
 
 ## Quick start
 
 ```bash
+git clone --recurse-submodules https://github.com/lachlanchen/LazyGame.git
+cd LazyGame
 npm ci
 npm run check
-npm run dev
+npm run app:start
 ```
 
-Open <http://127.0.0.1:5173/>. The demo is intentionally small; its purpose is
-to prove stale-candidate rejection, non-mutating previews, explicit commitment,
-locale switching, evidence labels, and duplicate-free resume behavior.
+Open <http://127.0.0.1:8011/>. The reference game demonstrates bound legal
+candidates, non-mutating previews, explicit confirmation, localized evidence,
+and duplicate-free local resume.
 
-## Adapter shape
+## Architecture baseline
 
-```ts
-interface GameAdapter<State, Action, PublicView, Config> {
-  manifest: GameManifest
-  initialState(config: Config, seed: string): State
-  serializeState(state: State): unknown
-  activeActor(state: State): string | null
-  legalActions(state: State, actorId: string): readonly Action[]
-  canonicalAction(action: Action): unknown
-  describeAction(state: State, action: Action, actorId: string): ActionDescription
-  applyAction(state: State, action: Action, actorId: string): Transition<State>
-  publicView(state: State, viewer: ViewerIdentity): PublicView
-  teaching(state: State, action: Action, actorId: string): TeachingBundle
-}
-```
-
-See [the full contract](docs/framework-contract.md) for state tokens,
-visibility, revisions, idempotency, and evidence provenance.
-
-The included browser demo is intentionally single-writer because Web Storage
-has no multi-key transaction. `AtomicStorageLike` protects only one-session
-`mutate` compare-and-set; it does not make create, resume, delete, or the index
-transactional. Production multi-tab or server deployments must externally
-serialize the entire lifecycle or use a transactional database.
+The complete adapter and authority contract is in
+[`docs/framework-contract.md`](docs/framework-contract.md). The browser demo is
+deliberately single-writer because Web Storage cannot make its multi-key
+lifecycle transactional. Production multi-tab or server deployments must
+serialize the lifecycle or use a transactional database.
 
 ## Validation
 
@@ -82,26 +78,25 @@ npm audit --audit-level=high
 git diff --check
 ```
 
-Downloaded models, engines, databases, browser profiles, and evidence stay in
-ignored local directories and never enter the repository.
+Downloaded engines, models, databases, browser profiles, private sessions, and
+runtime evidence belong in ignored local directories and never in Git.
 
-## License and citation
+## Citation
 
-Source is MIT licensed. External engines and models retain their own licenses.
-GitHub reads [`CITATION.cff`](CITATION.cff) to expose **Cite this repository**.
+If you use LazyGame in research, cite the repository. GitHub reads
+[`CITATION.cff`](CITATION.cff) and shows a **Cite this repository** panel.
 
 ```bibtex
-@software{chen_game_teaching_framework_2026,
-  author  = {Chen, Lachlan},
-  title   = {Game Teaching Framework},
-  year    = {2026},
-  version = {0.1.0},
-  url     = {https://github.com/lachlanchen/LazyGame}
+@software{chen_lazygame_2026,
+  author = {Chen, Lachlan},
+  title = {LazyGame: Game Teaching Framework},
+  year = {2026},
+  url = {https://github.com/lachlanchen/LazyGame}
 }
 ```
 
-## Support
+## Status and scope
 
-Support continued open-source work through [GitHub Sponsors](https://github.com/sponsors/lachlanchen)
-or visit [Lazying Art](https://lazying.art). Funding links are also declared in
-[`.github/FUNDING.yml`](.github/FUNDING.yml).
+LazyGame is a reusable teaching foundation and reference implementation, not a
+universal rules engine or remote-authenticated game server. The four product
+repositories remain independently versioned and are linked here as submodules.

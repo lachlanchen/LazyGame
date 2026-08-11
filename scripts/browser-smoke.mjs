@@ -6,7 +6,7 @@ import { fileURLToPath } from 'node:url'
 import { chromium } from 'playwright-core'
 
 const projectRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..')
-const appPort = process.env.GAME_APP_PORT ?? '8020'
+const appPort = process.env.GAME_APP_PORT ?? '8011'
 const cdpPort = process.env.GAME_CDP_PORT ?? '9480'
 const appUrl = `http://127.0.0.1:${appPort}/`
 const cdpUrl = `http://127.0.0.1:${cdpPort}`
@@ -189,6 +189,49 @@ try {
   checks.japanese = await page.getByText('ゲーム指導フレームワーク').isVisible()
   checks.japaneseLang = await page.evaluate(() => document.documentElement.lang === 'ja')
 
+  const localeLabels = {
+    en: 'English',
+    ar: 'العربية',
+    es: 'Español',
+    fr: 'Français',
+    ja: '日本語',
+    ko: '한국어',
+    vi: 'Tiếng Việt',
+    'zh-Hans': '简体中文',
+    'zh-Hant': '繁體中文',
+    de: 'Deutsch',
+    ru: 'Русский',
+  }
+  checks.localeOptions = await page.getByTestId('locale-switch').locator('option').evaluateAll(
+    (options) => options.map((option) => [option.value, option.textContent]),
+  )
+  checks.localeOptionsExact = JSON.stringify(checks.localeOptions) === JSON.stringify(Object.entries(localeLabels))
+  const localeMetadata = []
+  for (const locale of Object.keys(localeLabels)) {
+    await page.getByTestId('locale-switch').selectOption(locale)
+    await page.waitForFunction((expectedLocale) => document.documentElement.lang === expectedLocale, locale)
+    localeMetadata.push(await page.evaluate((expectedLocale) => {
+      const title = document.querySelector('.game-header strong')?.textContent?.trim() ?? ''
+      const subtitle = document.querySelector('.game-header span')?.textContent?.trim() ?? ''
+      return {
+        locale: expectedLocale,
+        lang: document.documentElement.lang,
+        dir: document.documentElement.dir,
+        titleMatches: title.length > 0 && document.title === title,
+        descriptionMatches: subtitle.length > 0 &&
+          document.querySelector('meta[name="description"]')?.getAttribute('content') === subtitle,
+      }
+    }, locale))
+  }
+  checks.allLocaleMetadata = localeMetadata.every((entry) =>
+    entry.lang === entry.locale && entry.dir === (entry.locale === 'ar' ? 'rtl' : 'ltr') &&
+    entry.titleMatches && entry.descriptionMatches,
+  )
+  await page.getByTestId('locale-switch').selectOption('ar')
+  checks.arabicRtl = await page.evaluate(() =>
+    document.documentElement.lang === 'ar' && document.documentElement.dir === 'rtl',
+  )
+
   checks.desktopFits = await page.evaluate(() => {
     const root = document.documentElement
     const board = document.querySelector('[data-testid="demo-board"]')?.getBoundingClientRect()
@@ -253,6 +296,9 @@ try {
     simplifiedChineseLang: true,
     japanese: true,
     japaneseLang: true,
+    localeOptionsExact: true,
+    allLocaleMetadata: true,
+    arabicRtl: true,
     desktopFits: true,
     mobileFits: true,
     mobileTouchTargets: true,

@@ -8,7 +8,7 @@ display="${GAME_DISPLAY:-:110}"
 vnc_port="${GAME_VNC_PORT:-5940}"
 novnc_port="${GAME_NOVNC_PORT:-6140}"
 cdp_port="${GAME_CDP_PORT:-9480}"
-app_port="${GAME_APP_PORT:-8020}"
+app_port="${GAME_APP_PORT:-8011}"
 app_url="http://127.0.0.1:$app_port/"
 lock_file="$project_root/.local/runtime/browser-control.lock"
 

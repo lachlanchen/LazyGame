@@ -111,7 +111,7 @@ describe('bounded analysis evidence', () => {
       }),
     ).toThrow(/provenance/)
     expect(() => validateCoachDraft(legal, {
-      locale: 'fr' as never,
+      locale: 'xx' as never,
       headline: 'Claim',
       explanation: 'Unverified prose',
       limitation: 'None',

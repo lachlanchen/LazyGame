@@ -4,7 +4,7 @@ umask 077
 
 project_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd -P)"
 runtime_dir="${GAME_RUNTIME_DIR:-$project_root/.local/runtime/app}"
-app_port="${GAME_APP_PORT:-8020}"
+app_port="${GAME_APP_PORT:-8011}"
 pid_file="$runtime_dir/app.pid"
 log_file="$runtime_dir/app.log"
 lock_file="$project_root/.local/runtime/app-control.lock"

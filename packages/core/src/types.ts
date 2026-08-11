@@ -1,4 +1,16 @@
-export const SUPPORTED_LOCALES = ['en', 'zh-Hans', 'ja'] as const
+export const SUPPORTED_LOCALES = [
+  'en',
+  'ar',
+  'es',
+  'fr',
+  'ja',
+  'ko',
+  'vi',
+  'zh-Hans',
+  'zh-Hant',
+  'de',
+  'ru',
+] as const
 export type Locale = (typeof SUPPORTED_LOCALES)[number]
 
 export const EVIDENCE_KINDS = [

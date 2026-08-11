@@ -1,4 +1,5 @@
 import {
+  SUPPORTED_LOCALES,
   SessionRepository,
   createTranslator,
   replaySession,
@@ -12,10 +13,22 @@ import { useMemo, useState } from 'react'
 import { catalogs } from './catalogs'
 import { lineAdapter, type LineState } from './lineGame'
 
-const LOCALE_LABELS: Record<Locale, string> = {
+export const LOCALE_LABELS: Record<Locale, string> = {
   en: 'English',
-  'zh-Hans': '简体中文',
+  ar: 'العربية',
+  es: 'Español',
+  fr: 'Français',
   ja: '日本語',
+  ko: '한국어',
+  vi: 'Tiếng Việt',
+  'zh-Hans': '简体中文',
+  'zh-Hant': '繁體中文',
+  de: 'Deutsch',
+  ru: 'Русский',
+}
+
+export function isSupportedLocale(value: string | null): value is Locale {
+  return value !== null && (SUPPORTED_LOCALES as readonly string[]).includes(value)
 }
 
 function TeachingCard({ claim, t }: { claim: TeachingClaim; t: ReturnType<typeof createTranslator>['t'] }) {
@@ -34,7 +47,7 @@ function TeachingCard({ claim, t }: { claim: TeachingClaim; t: ReturnType<typeof
 export function App() {
   const [locale, setLocale] = useState<Locale>(() => {
     const stored = localStorage.getItem('game-demo.locale')
-    return stored === 'zh-Hans' || stored === 'ja' ? stored : 'en'
+    return isSupportedLocale(stored) ? stored : 'en'
   })
   const repository = useMemo(
     () => new SessionRepository<LineState>(localStorage, {

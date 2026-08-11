@@ -10,8 +10,16 @@ import {
 
 const catalogs: Catalogs = {
   en: { hello: 'Hello {name}', fallback: 'English only' },
+  ar: { hello: 'مرحبًا {name}' },
+  es: { hello: 'Hola {name}' },
+  fr: { hello: 'Bonjour {name}' },
   'zh-Hans': { hello: '你好，{name}' },
+  'zh-Hant': { hello: '你好，{name}' },
   ja: { hello: 'こんにちは、{name}' },
+  ko: { hello: '안녕하세요, {name}' },
+  vi: { hello: 'Xin chào {name}' },
+  de: { hello: 'Hallo {name}' },
+  ru: { hello: 'Здравствуйте, {name}' },
 }
 
 describe('i18n and visibility', () => {

@@ -57,7 +57,7 @@ rm -f -- "$fixture_root/app/app.pid"
 setsid node -e 'setInterval(() => {}, 1000)' \
   "$project_root/node_modules/vite/bin/vite.jsx" preview \
   --config "$project_root/apps/demo/vite.config.ts.bak" \
-  --host 127.0.0.10 --port "${GAME_APP_PORT:-8020}0" --strictPort >/dev/null 2>&1 &
+  --host 127.0.0.10 --port "${GAME_APP_PORT:-8011}0" --strictPort >/dev/null 2>&1 &
 deceptive_pid=$!
 printf '%s\n' "$deceptive_pid" >"$fixture_root/app/app.pid"
 deceptive_status="$(GAME_RUNTIME_DIR="$fixture_root/app" bash "$run_script" status)"

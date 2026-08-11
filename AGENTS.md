@@ -1,7 +1,8 @@
 # Game teaching framework guidance
 
-This workspace contains a reusable teaching framework and three independently
-publishable product repositories: `Chess/`, `Poker/`, and `Mahjong/`.
+This workspace contains a reusable teaching framework and four independently
+publishable product repositories: `LazyWeiqi/`, `LazyChess/`, `LazyPoker/`,
+and `LazyMahjong/`.
 
 ## Authority contract
 
@@ -26,13 +27,15 @@ publishable product repositories: `Chess/`, `Poker/`, and `Mahjong/`.
 - Explanations should answer: what can I do, why here/now, what changes, what is
   the likely reply, what should I calculate next, and what principle transfers.
 - Variants and simplified lessons must be visibly labeled.
-- English, Simplified Chinese, and Japanese strings use stable message keys;
+- English, Arabic, Spanish, French, Japanese, Korean, Vietnamese, Simplified
+  Chinese, Traditional Chinese, German, and Russian use stable message keys;
   do not hard-code learner-facing prose inside rules modules.
 
 ## Repository and runtime policy
 
-- `Game/` is the reusable framework repository. `Chess/`, `Poker/`, and
-  `Mahjong/` are separate Git repositories and later tracked as submodules.
+- `LazyGame/` is the reusable framework repository. `LazyWeiqi/`,
+  `LazyChess/`, `LazyPoker/`, and `LazyMahjong/` are separate Git repositories
+  tracked as submodules.
 - Do not copy `.git`, `.env`, `data`, `.local`, browser profiles, databases,
   caches, downloaded binaries, or model weights between repositories.
 - Models and engines live under each repository's ignored `.local/` tree and

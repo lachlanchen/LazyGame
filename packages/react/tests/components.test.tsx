@@ -2,7 +2,7 @@ import type { BoundCandidate } from '@lazyingart/game-core'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { describe, expect, it } from 'vitest'
 
-import { CandidateList, EvidenceBadge, GameFrame } from '../src'
+import { CandidateList, documentMetadata, EvidenceBadge, GameFrame } from '../src'
 
 const candidate: BoundCandidate<{ cell: number }> = {
   id: 'candidate_1',
@@ -48,7 +48,11 @@ describe('shared teaching components', () => {
         title="Teacher"
         subtitle="Demo"
         locale="ja"
-        localeLabels={{ en: 'English', 'zh-Hans': '简体中文', ja: '日本語' }}
+        localeLabels={{
+          en: 'English', ar: 'العربية', es: 'Español', fr: 'Français', ja: '日本語',
+          ko: '한국어', vi: 'Tiếng Việt', 'zh-Hans': '简体中文', 'zh-Hant': '繁體中文',
+          de: 'Deutsch', ru: 'Русский',
+        }}
         languageLabel="言語"
         onLocaleChange={() => undefined}
         board={<div>Board</div>}
@@ -60,5 +64,15 @@ describe('shared teaching components', () => {
     expect(html).toContain('data-testid="locale-switch"')
     expect(html).toContain('>言語</span>')
     expect(html).toContain('<option value="ja" selected="">日本語</option>')
+  })
+
+  it('derives localized document metadata and RTL direction', () => {
+    expect(documentMetadata('ar', 'إطار تعليم الألعاب', 'درس بقواعد حتمية')).toEqual({
+      locale: 'ar',
+      direction: 'rtl',
+      title: 'إطار تعليم الألعاب',
+      description: 'درس بقواعد حتمية',
+    })
+    expect(documentMetadata('de', 'Spielunterricht', 'Deterministische Regeln').direction).toBe('ltr')
   })
 })

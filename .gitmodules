@@ -1,9 +1,12 @@
-[submodule "Chess"]
-	path = Chess
+[submodule "LazyChess"]
+	path = LazyChess
 	url = https://github.com/lachlanchen/LazyChess.git
-[submodule "Poker"]
-	path = Poker
+[submodule "LazyPoker"]
+	path = LazyPoker
 	url = https://github.com/lachlanchen/LazyPoker.git
-[submodule "Mahjong"]
-	path = Mahjong
+[submodule "LazyMahjong"]
+	path = LazyMahjong
 	url = https://github.com/lachlanchen/LazyMahjong.git
+[submodule "LazyWeiqi"]
+	path = LazyWeiqi
+	url = https://github.com/lachlanchen/LazyWeiqi.git
