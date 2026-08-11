@@ -3,7 +3,7 @@
 Game Teaching Framework turns deterministic game engines into interactive,
 evidence-aware teachers. It extracts the reusable authority, candidate,
 localization, persistence, and teaching patterns proven in
-[Path of Influence](https://github.com/lachlanchen/Weiqi) without pretending
+[Path of Influence](https://github.com/lachlanchen/LazyWeiqi) without pretending
 that one rules engine can govern unrelated games.
 
 The framework is intentionally strict:
@@ -29,9 +29,9 @@ Mahjong/         Mahjong product submodule
 ```
 
 The products are independently released at
-[Chess](https://github.com/lachlanchen/Chess),
-[Poker](https://github.com/lachlanchen/Poker), and
-[Mahjong](https://github.com/lachlanchen/Mahjong), then linked here as Git
+[Chess](https://github.com/lachlanchen/LazyChess),
+[Poker](https://github.com/lachlanchen/LazyPoker), and
+[Mahjong](https://github.com/lachlanchen/LazyMahjong), then linked here as Git
 submodules so their histories and release gates remain separate.
 
 ## Quick start
@@ -96,7 +96,7 @@ GitHub reads [`CITATION.cff`](CITATION.cff) to expose **Cite this repository**.
   title   = {Game Teaching Framework},
   year    = {2026},
   version = {0.1.0},
-  url     = {https://github.com/lachlanchen/Game}
+  url     = {https://github.com/lachlanchen/LazyGame}
 }
 ```
 
