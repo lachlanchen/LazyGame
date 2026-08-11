@@ -1,0 +1,30 @@
+{
+  "name": "@lazyingart/game-core",
+  "version": "0.1.0",
+  "description": "Deterministic authority, candidate, replay, visibility, i18n, and teaching contracts for local-first games.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lachlanchen/Game.git",
+    "directory": "packages/core"
+  },
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": ["dist", "src", "README.md", "LICENSE"],
+  "packageManager": "npm@10.9.4",
+  "engines": {
+    "node": "^20.19.0 || >=22.12.0"
+  },
+  "scripts": {
+    "build": "tsc -b",
+    "lint": "tsc -b --pretty false",
+    "prepack": "npm run build"
+  }
+}

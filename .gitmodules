@@ -1,0 +1,9 @@
+[submodule "Chess"]
+	path = Chess
+	url = https://github.com/lachlanchen/Chess.git
+[submodule "Poker"]
+	path = Poker
+	url = https://github.com/lachlanchen/Poker.git
+[submodule "Mahjong"]
+	path = Mahjong
+	url = https://github.com/lachlanchen/Mahjong.git

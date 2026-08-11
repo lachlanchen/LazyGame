@@ -1,0 +1,37 @@
+{
+  "name": "@lazyingart/game-react",
+  "version": "0.1.0",
+  "description": "Accessible React teaching controls for deterministic game adapters.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lachlanchen/Game.git",
+    "directory": "packages/react"
+  },
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": ["dist", "src", "README.md", "LICENSE"],
+  "packageManager": "npm@10.9.4",
+  "engines": {
+    "node": "^20.19.0 || >=22.12.0"
+  },
+  "scripts": {
+    "build": "tsc -b",
+    "lint": "tsc -b --pretty false",
+    "prepack": "npm run build"
+  },
+  "dependencies": {
+    "@lazyingart/game-core": "0.1.0"
+  },
+  "peerDependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  }
+}

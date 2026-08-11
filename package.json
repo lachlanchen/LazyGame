@@ -1,0 +1,55 @@
+{
+  "name": "game-teaching-workspace",
+  "version": "0.1.0",
+  "description": "A reusable local-first framework for deterministic, evidence-bounded teaching games.",
+  "private": true,
+  "license": "MIT",
+  "author": "Lachlan Chen",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lachlanchen/Game.git"
+  },
+  "homepage": "https://github.com/lachlanchen/Game#readme",
+  "bugs": {
+    "url": "https://github.com/lachlanchen/Game/issues"
+  },
+  "keywords": [
+    "game-framework",
+    "teaching",
+    "deterministic",
+    "local-first",
+    "react"
+  ],
+  "packageManager": "npm@10.9.4",
+  "type": "module",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "dev": "npm --workspace @lazyingart/game-demo run dev",
+    "lint": "tsc -b --pretty false",
+    "test": "vitest run",
+    "build": "tsc -b && npm --workspace @lazyingart/game-demo run build",
+    "check": "npm run lint && npm test && npm run build",
+    "preview": "npm --workspace @lazyingart/game-demo run preview",
+    "app:start": "scripts/run.sh start",
+    "app:stop": "scripts/run.sh stop",
+    "novnc:start": "scripts/launch-novnc.sh start",
+    "novnc:stop": "scripts/launch-novnc.sh stop",
+    "smoke": "node scripts/browser-smoke.mjs",
+    "package:smoke": "node scripts/package-smoke.mjs"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0",
+    "@vitejs/plugin-react": "^5.0.0",
+    "playwright-core": "1.62.1",
+    "typescript": "^5.9.0",
+    "vite": "^7.1.0",
+    "vitest": "^3.2.0"
+  },
+  "engines": {
+    "node": "^20.19.0 || >=22.12.0"
+  }
+}
